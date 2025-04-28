@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carbon Footprint Calculator | EcoTrack</title>
+    <style>
+        /* Basic reset and typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f8f5;
+            padding: 0;
+            margin: 0;
+            display: flex;
+        }
+        
+        /* Top Navigation Bar */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 24px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 30px;
+            margin-right: 10px;
+        }
+        
+        .top-nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .top-nav-button {
+            background-color: #2c8c5e;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .top-nav-button:hover {
+            background-color: #236e4a;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #206e53;
+            color: white;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+            z-index: 900;
+        }
+        
+        .sidebar-toggle {
+            position: fixed;
+            top: 70px;
+            left: 250px;
+            background-color: #206e53;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            width: 24px;
+            height: 40px;
+            cursor: pointer;
+            z-index: 901;
+            transition: left 0.3s ease;
+        }
+        
+        .sidebar-hidden {
+            transform: translateX(-250px);
+        }
+        
+        .toggle-hidden {
+            left: 0;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            border-left: 4px solid transparent;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left-color: white;
+        }
+        
+        .nav-item i {
+            margin-right: 15px;
+            font-size: 20px;
+            width: 24px;
+            text-align: center;
+        }
+        .sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    padding-bottom: 15px;
+}
+
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-info h3 {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.profile-info p {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 10px 0;
+}
+
+.logout i {
+    margin-right: 10px;
+}
+        
+        .user-role {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding-top: 60px;
+            margin-left: 250px;
+            transition: margin-left 0.3s ease;
+        }
+        
+        .main-content.expanded {
+            margin-left: 0;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background-color: #2c8c5e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* Tab Navigation */
+        .tab-navigation {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        
+        .tab-button {
+            padding: 15px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .tab-button:hover {
+            background-color: #eaf5ef;
+            color: #2c8c5e;
+        }
+        
+        .tab-button.active {
+            color: #2c8c5e;
+            border-bottom: 3px solid #2c8c5e;
+            background-color: #eaf5ef;
+        }
+        
+        /* Forms */
+        .calculator-form {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        input[type="number"],
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .input-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-group input {
+            flex: 1;
+        }
+        
+        .input-group span {
+            padding: 0 10px;
+            color: #666;
+        }
+        
+        .button {
+            background-color: #2c8c5e;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        
+        .button:hover {
+            background-color: #236e4a;
+        }
+        
+        .secondary-button {
+            background-color: #6c757d;
+        }
+        
+        .secondary-button:hover {
+            background-color: #545b62;
+        }
+        
+        /* Results */
+        #results {
+            background-color: #f6f6f6;
+            padding: 20px;
+            border-top: 1px solid #ddd;
+            display: none;
+        }
+        
+        #results h2 {
+            margin-bottom: 15px;
+            color: #2c8c5e;
+        }
+        
+        .result-card {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+        
+        .result-card h4 {
+            margin-bottom: 10px;
+            color: #236e4a;
+        }
+        
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .summary-table th,
+        .summary-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .summary-table th {
+            background-color: #f2f8f5;
+            font-weight: 600;
+            color: #236e4a;
+        }
+        
+        .summary-table tr:last-child td {
+            font-weight: bold;
+            border-top: 2px solid #2c8c5e;
+            background-color: #eaf5ef;
+        }
+        
+        /* Carbon indicators */
+        .low-carbon {
+            color: #2c8c5e;
+        }
+        
+        .medium-carbon {
+            color: #e6a817;
+        }
+        
+        .high-carbon {
+            color: #dc3545;
+        }
+        
+        /* Offset section */
+        #offset-section {
+            text-align: center;
+            padding: 20px;
+            background-color: #eaf5ef;
+            border-top: 1px solid #ddd;
+            display: none;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .tab-navigation {
+                flex-wrap: wrap;
+            }
+            
+            .tab-button {
+                flex: 1 0 33.33%;
+            }
+            
+            .sidebar {
+                width: 100%;
+                transform: translateY(-100%);
+                top: 60px;
+                height: calc(100vh - 60px);
+            }
+            
+            .sidebar-hidden {
+                transform: translateY(-100%);
+            }
+            
+            .sidebar-toggle {
+                top: auto;
+                bottom: 20px;
+                left: 20px;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .tab-button {
+                flex: 1 0 50%;
+            }
+            
+            .input-group {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .input-group span {
+                margin: 5px 0;
+            }
+            
+            .top-nav {
+                padding: 10px;
+            }
+            
+            .logo {
+                font-size: 20px;
+            }
+            
+            .top-nav-buttons {
+                gap: 8px;
+            }
+            
+            .top-nav-button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+        }
+        
+        /* Two-column layout for desktop */
+        @media (min-width: 768px) {
+            .form-row {
+                display: flex;
+                gap: 20px;
+            }
+            
+            .form-col {
+                flex: 1;
+            }
+        }
+    </style>
+    <!-- Font Awesome CDN for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="top-nav">
+        <div class="logo-container">
+            <a href="home.html" class="logo">
+                <span>ECOTRACK</span>
+            </a>
+        </div>
+        
+        <div class="top-nav-buttons">
+            <button class="top-nav-button" onclick="location.href='home.html'">Dashboard</button>
+            <button class="top-nav-button" onclick="location.href='profile.html'">Profile</button>
+        </div>
+    </div>
+    
+    <!-- Sidebar Navigation -->
+    <div class="sidebar" id="sidebar">
+        <nav class="sidebar-nav">
+            <a href="home.html" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="calculator.html" class="nav-item">
+                <i class="fas fa-calculator"></i>
+                <span>Carbon Calculator</span>
+            </a>
+            <a href="tips.html" class="nav-item">
+                <i class="fas fa-lightbulb"></i>
+                <span>Eco Tips</span>
+            </a>
+            <a href="visualization.html" class="nav-item">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress</span>
+            </a>
+            <a href="community.html" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Community</span>
+            </a>
+            <a href="impact.html" class="nav-item">
+                <i class="fas fa-leaf"></i>
+                <span>Impact</span>
+            </a>
+            <a href="leaderboard.html" class="nav-item">
+                <i class="fas fa-trophy"></i>
+                <span>Leaderboard</span>
+            </a>
+            <a href="blogs.html" class="nav-item">
+                <i class="fas fa-newspaper"></i>
+                <span>Blogs</span>
+            </a>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="profile.html" class="profile-link">
+                <div class="profile-pic">
+                    <img src="user1.png" alt="Profile Picture">
+                </div>
+                <div class="profile-info">
+                    <h3>John Doe</h3>
+                    <p>Eco Enthusiast</p>
+                </div>
+            </a>
+            <a href="logout.html" class="logout">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+    
+    <button class="sidebar-toggle" id="sidebar-toggle">
+        <i class="fas fa-chevron-left" id="toggle-icon"></i>
+    </button>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div class="container">
+            <header>
+                <h1>Carbon Footprint Calculator</h1>
+                <p class="subtitle">Calculate and offset your carbon emissions</p>
+            </header>
+            
+            <!-- Date range selection -->
+            <div class="calculator-form" id="date-range">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="start-date">Start Date:</label>
+                            <input type="date" id="start-date" name="start-date">
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="end-date">End Date:</label>
+                            <input type="date" id="end-date" name="end-date">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tab Navigation -->
+            <div class="tab-navigation">
+                <button class="tab-button active" onclick="showTab('household')">Household</button>
+                <button class="tab-button" onclick="showTab('flights')">Flights</button>
+                <button class="tab-button" onclick="showTab('car')">Car</button>
+                <button class="tab-button" onclick="showTab('motorbike')">Motorbike</button>
+                <button class="tab-button" onclick="showTab('public')">Public Transport</button>
+                <button class="tab-button" onclick="showTab('secondary')">Secondary</button>
+            </div>
+            
+            <!-- Household Calculator -->
+            <div class="calculator-form" id="household">
+                <h3>Household Carbon Footprint (30 days)</h3>
+                <p>Enter your household energy consumption for the selected period.</p>
+                
+                <div class="form-group">
+                    <label for="household-people">Number of people in household:</label>
+                    <input type="number" id="household-people" name="household-people" value="1" min="1">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="electricity">Electricity:</label>
+                            <div class="input-group">
+                                <input type="number" id="electricity" name="electricity" placeholder="0">
+                                <span>kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="natural-gas">Natural Gas:</label>
+                            <div class="input-group">
+                                <input type="number" id="natural-gas" name="natural-gas" placeholder="0">
+                                <span>kWh</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="heating-oil">Heating Oil:</label>
+                            <div class="input-group">
+                                <input type="number" id="heating-oil" name="heating-oil" placeholder="0">
+                                <span>gallons</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="coal">Coal:</label>
+                            <div class="input-group">
+                                <input type="number" id="coal" name="coal" placeholder="0">
+                                <span>kWh</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="lpg">LPG:</label>
+                            <div class="input-group">
+                                <input type="number" id="lpg" name="lpg" placeholder="0">
+                                <span>therms</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="propane">Propane:</label>
+                            <div class="input-group">
+                                <input type="number" id="propane" name="propane" placeholder="0">
+                                <span>gallons</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="wooden-pellets">Wooden Pellets:</label>
+                            <div class="input-group">
+                                <input type="number" id="wooden-pellets" name="wooden-pellets" placeholder="0">
+                                <span>metric tons</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="button" onclick="calculateHousehold()">Calculate Household Footprint</button>
+                
+                <div id="household-result" class="result-card"></div>
+            </div>
+            
+            <!-- Flights Calculator -->
+            <div class="calculator-form" id="flights">
+                <h3>Flights Carbon Footprint (30 days)</h3>
+                <p>Enter your flight details for the selected period.</p>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="flights-from">From (airport code):</label>
+                            <input type="text" id="flights-from" name="flights-from" placeholder="e.g., LHR">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="flights-to">To (airport code):</label>
+                            <input type="text" id="flights-to" name="flights-to" placeholder="e.g., JFK">
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="flights-via">Via (optional):</label>
+                            <input type="text" id="flights-via" name="flights-via" placeholder="e.g., CDG">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="flights-class">Travel Class:</label>
+                            <select id="flights-class" name="flights-class">
+                                <option value="economy">Economy</option>
+                                <option value="business">Business</option>
+                                <option value="first">First</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="flights-trips">Number of round trips:</label>
+                            <input type="number" id="flights-trips" name="flights-trips" value="1" min="1">
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="flights-radiative" checked>
+                                Include radiative forcing (non-CO2 effects)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="button" onclick="calculateFlights()">Calculate Flight Footprint</button>
+                
+                <div id="flights-result" class="result-card"></div>
+            </div>
+            
+            <!-- Car Calculator -->
+            <div class="calculator-form" id="car">
+                <h3>Car Carbon Footprint (30 days)</h3>
+                <p>Enter your car usage for the selected period.</p>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="car-mileage">Total Mileage:</label>
+                            <div class="input-group">
+                                <input type="number" id="car-mileage" name="car-mileage" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="car-vehicle">Vehicle Type:</label>
+                            <select id="car-vehicle" name="car-vehicle">
+                                <option value="manual">Enter efficiency manually</option>
+                                <!-- JS will populate this -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="car-efficiency">Fuel Efficiency:</label>
+                    <div class="input-group">
+                        <input type="number" id="car-efficiency" name="car-efficiency" placeholder="Enter MPG">
+                        <span>mpg</span>
+                    </div>
+                </div>
+                
+                <button class="button" onclick="calculateCar()">Calculate Car Footprint</button>
+                
+                <div id="car-result" class="result-card"></div>
+            </div>
+            
+            <!-- Motorbike Calculator -->
+            <div class="calculator-form" id="motorbike">
+                <h3>Motorbike Carbon Footprint (30 days)</h3>
+                <p>Enter your motorbike usage for the selected period.</p>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="motorbike-mileage">Total Mileage:</label>
+                            <div class="input-group">
+                                <input type="number" id="motorbike-mileage" name="motorbike-mileage" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="motorbike-type">Motorbike Type:</label>
+                            <select id="motorbike-type" name="motorbike-type">
+                                <option value="manual">Enter efficiency manually</option>
+                                <!-- JS will populate this -->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="motorbike-efficiency">Fuel Efficiency:</label>
+                    <div class="input-group">
+                        <input type="number" id="motorbike-efficiency" name="motorbike-efficiency" placeholder="Enter MPG">
+                        <span>mpg</span>
+                    </div>
+                </div>
+                
+                <button class="button" onclick="calculateMotorbike()">Calculate Motorbike Footprint</button>
+                
+                <div id="motorbike-result" class="result-card"></div>
+            </div>
+            
+            <!-- Public Transport Calculator -->
+            <div class="calculator-form" id="public">
+                <h3>Public Transport Carbon Footprint (30 days)</h3>
+                <p>Enter your public transport usage for the selected period.</p>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="bus">Bus:</label>
+                            <div class="input-group">
+                                <input type="number" id="bus" name="bus" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="coach">Coach:</label>
+                            <div class="input-group">
+                                <input type="number" id="coach" name="coach" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="local-train">Local Train:</label>
+                            <div class="input-group">
+                                <input type="number" id="local-train" name="local-train" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="long-distance-train">Long Distance Train:</label>
+                            <div class="input-group">
+                                <input type="number" id="long-distance-train" name="long-distance-train" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="tram">Tram:</label>
+                            <div class="input-group">
+                                <input type="number" id="tram" name="tram" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subway">Subway:</label>
+                            <div class="input-group">
+                                <input type="number" id="subway" name="subway" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="taxi">Taxi:</label>
+                            <div class="input-group">
+                                <input type="number" id="taxi" name="taxi" placeholder="0">
+                                <span>miles</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="button" onclick="calculatePublic()">Calculate Public Transport Footprint</button>
+                
+                <div id="public-result" class="result-card"></div>
+            </div>
+            
+            <!-- Secondary Footprint Calculator -->
+            <div class="calculator-form" id="secondary">
+                <h3>Secondary Carbon Footprint (30 days)</h3>
+                <p>Enter your spending in each category for the selected period.</p>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="food">Food & Drink:</label>
+                            <div class="input-group">
+                                <input type="number" id="food" name="food" placeholder="0">
+                                <span>$</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pharmaceuticals">Pharmaceuticals:</label>
+                            <div class="input-group">
+                                <input type="number" id="pharmaceuticals" name="pharmaceuticals" placeholder="0">
+                                <span>$</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="clothes">Clothes:</label>
+                            <div class="input-group">
+                                <input type="number" id="clothes" name="clothes" placeholder="0">
+                                <span>$</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="paper">Paper Products:</label>
+                            <div class="input-group">
+                                <input type="number" id="paper" name="paper" placeholder="0">
+                                <span>$</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="computers">Computers & Tech:</label>
+                            <div class="input-group">
+                                <input type="number" id="computers" name="computers" placeholder="0">
+                                <span>$</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tv">TV & Electronics:</label>
+                            <div class="input-group">
+                                <input type="number" id="tv" name="tv" placeholder="0">
+                                <span>$</span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="vehicles">Vehicles & Parts:</label>
+                            <div class="input-group">
+                                <input type="number" id="vehicles" name="vehicles" placeholder="0">
+                                <span>$</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="furniture">Furniture:</label>
+                            <div class="input-group">
+                                <input type="number" id="furniture" name="furniture" placeholder="0">
+<span>$</span>
+</div>
+</div>
+
+<div class="form-group">
+    <label for="hotels">Hotels & Accommodation:</label>
+    <div class="input-group">
+        <input type="number" id="hotels" name="hotels" placeholder="0">
+        <span>$</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="restaurants">Restaurants & Cafes:</label>
+    <div class="input-group">
+        <input type="number" id="restaurants" name="restaurants" placeholder="0">
+        <span>$</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="recreation">Recreation & Entertainment:</label>
+    <div class="input-group">
+        <input type="number" id="recreation" name="recreation" placeholder="0">
+        <span>$</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="financial">Financial Services:</label>
+    <div class="input-group">
+        <input type="number" id="financial" name="financial" placeholder="0">
+        <span>$</span>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="other">Other Purchases:</label>
+    <div class="input-group">
+        <input type="number" id="other" name="other" placeholder="0">
+        <span>$</span>
+    </div>
+</div>
+</div>
+</div>
+
+<button class="button" onclick="calculateSecondary()">Calculate Secondary Footprint</button>
+
+<div id="secondary-result" class="result-card"></div>
+</div>
+
+<!-- Results Section -->
+<div id="results">
+    <h2>Your Carbon Footprint Results</h2>
+    
+    <div class="result-card">
+        <h4>Summary</h4>
+        <table class="summary-table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>CO2e (kg)</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="summary-tbody">
+                <!-- Will be populated by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="result-card">
+        <h4>Your Impact</h4>
+        <p>Your total carbon footprint is <span id="total-carbon" class="high-carbon">--</span> kg CO2e per month.</p>
+        <p>This is equivalent to <span id="trees-equivalent">--</span> trees needed to offset your emissions.</p>
+        <p id="comparison-text">--</p>
+    </div>
+    
+    <button class="button" onclick="showOffsetSection()">Offset Your Carbon Footprint</button>
+</div>
+
+<!-- Offset Section -->
+<div id="offset-section">
+    <h2>Offset Your Carbon Footprint</h2>
+    <p>You can offset your carbon footprint by supporting certified carbon offset projects.</p>
+    
+    <div class="result-card">
+        <h4>Recommended Offset</h4>
+        <p>To offset your monthly footprint of <span id="offset-amount">--</span> kg CO2e:</p>
+        <p>Estimated cost: <strong>$<span id="offset-cost">--</span></strong></p>
+        
+        <div style="margin: 20px 0;">
+            <button class="button" onclick="proceedToOffset()">Proceed to Offset</button>
+            <button class="button secondary-button" onclick="hideOffsetSection()">Not Now</button>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<script>
+// Variables to store carbon footprint data
+let carbonData = {
+    household: 0,
+    flights: 0,
+    car: 0,
+    motorbike: 0,
+    public: 0,
+    secondary: 0
+};
+
+// Set default dates
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+    
+    document.getElementById('start-date').value = formatDate(thirtyDaysAgo);
+    document.getElementById('end-date').value = formatDate(today);
+    
+    // Show initial tab (household)
+    showTab('household');
+    
+    // Populate vehicle types
+    populateVehicleTypes();
+});
+
+// Format date as YYYY-MM-DD
+function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}
+
+// Show selected tab
+function showTab(tabId) {
+    // Hide all calculator forms
+    document.querySelectorAll('.calculator-form').forEach(form => {
+        if (form.id !== 'date-range') {
+            form.style.display = 'none';
+        }
+    });
+    
+    // Show selected form
+    document.getElementById(tabId).style.display = 'block';
+    
+    // Update active tab button
+    document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+    });
+    document.querySelector(`.tab-button[onclick="showTab('${tabId}')"]`).classList.add('active');
+}
+
+// Populate vehicle types
+function populateVehicleTypes() {
+    const carTypes = [
+        { value: 'small-petrol', label: 'Small car (petrol)' },
+        { value: 'medium-petrol', label: 'Medium car (petrol)' },
+        { value: 'large-petrol', label: 'Large car (petrol)' },
+        { value: 'small-diesel', label: 'Small car (diesel)' },
+        { value: 'medium-diesel', label: 'Medium car (diesel)' },
+        { value: 'large-diesel', label: 'Large car (diesel)' },
+        { value: 'hybrid', label: 'Hybrid car' },
+        { value: 'phev', label: 'Plug-in hybrid (PHEV)' },
+        { value: 'electric', label: 'Electric car (EV)' }
+    ];
+    
+    const motorbikeTypes = [
+        { value: 'small-motorbike', label: 'Small motorbike (up to 125cc)' },
+        { value: 'medium-motorbike', label: 'Medium motorbike (125-500cc)' },
+        { value: 'large-motorbike', label: 'Large motorbike (over 500cc)' }
+    ];
+    
+    // Populate car select
+    const carSelect = document.getElementById('car-vehicle');
+    carTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type.value;
+        option.textContent = type.label;
+        carSelect.appendChild(option);
+    });
+    
+    // Populate motorbike select
+    const motorbikeSelect = document.getElementById('motorbike-type');
+    motorbikeTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type.value;
+        option.textContent = type.label;
+        motorbikeSelect.appendChild(option);
+    });
+}
+
+// Calculate household carbon footprint
+function calculateHousehold() {
+    const people = parseFloat(document.getElementById('household-people').value) || 1;
+    const electricity = parseFloat(document.getElementById('electricity').value) || 0;
+    const naturalGas = parseFloat(document.getElementById('natural-gas').value) || 0;
+    const heatingOil = parseFloat(document.getElementById('heating-oil').value) || 0;
+    const coal = parseFloat(document.getElementById('coal').value) || 0;
+    const lpg = parseFloat(document.getElementById('lpg').value) || 0;
+    const propane = parseFloat(document.getElementById('propane').value) || 0;
+    const woodenPellets = parseFloat(document.getElementById('wooden-pellets').value) || 0;
+    
+    // Carbon factors (kg CO2e per unit)
+    const factors = {
+        electricity: 0.42, // kg CO2e per kWh
+        naturalGas: 0.2,   // kg CO2e per kWh
+        heatingOil: 10.15, // kg CO2e per gallon
+        coal: 0.36,        // kg CO2e per kWh
+        lpg: 6.44,         // kg CO2e per therm
+        propane: 5.74,     // kg CO2e per gallon
+        woodenPellets: 109.6 // kg CO2e per metric ton
+    };
+    
+    // Calculate carbon footprint
+    const footprint = (
+        electricity * factors.electricity +
+        naturalGas * factors.naturalGas +
+        heatingOil * factors.heatingOil +
+        coal * factors.coal +
+        lpg * factors.lpg +
+        propane * factors.propane +
+        woodenPellets * factors.woodenPellets
+    ) / people;
+    
+    // Round to 2 decimal places
+    carbonData.household = Math.round(footprint * 100) / 100;
+    
+    // Display result
+    const resultElement = document.getElementById('household-result');
+    resultElement.innerHTML = `
+        <h4>Household Footprint Result</h4>
+        <p>Your household carbon footprint is <strong class="${getCarbonClass(carbonData.household)}">${carbonData.household} kg CO2e</strong> per person per month.</p>
+    `;
+    
+    // Show results section
+    updateResults();
+}
+
+// Calculate flights carbon footprint
+function calculateFlights() {
+    // In a real app, this would call an API to calculate flight distances
+    // For this demo, we'll use a simplified calculation
+    
+    const trips = parseFloat(document.getElementById('flights-trips').value) || 0;
+    const travelClass = document.getElementById('flights-class').value;
+    const includeRadiative = document.getElementById('flights-radiative').checked;
+    
+    // Assume an average flight distance of 2000 miles per trip
+    const distance = 2000 * trips * 2; // Round trip
+    
+    // Class factors
+    const classFactor = {
+        economy: 1,
+        business: 2.2,
+        first: 4
+    };
+    
+    // Base emissions factor (kg CO2e per mile)
+    let emissionFactor = 0.18;
+    
+    // Apply radiative forcing factor if selected
+    if (includeRadiative) {
+        emissionFactor *= 1.9;
+    }
+    
+    // Calculate carbon footprint
+    const footprint = distance * emissionFactor * classFactor[travelClass];
+    
+    // Round to 2 decimal places
+    carbonData.flights = Math.round(footprint * 100) / 100;
+    
+    // Display result
+    const resultElement = document.getElementById('flights-result');
+    resultElement.innerHTML = `
+        <h4>Flight Footprint Result</h4>
+        <p>Your flight carbon footprint is <strong class="${getCarbonClass(carbonData.flights)}">${carbonData.flights} kg CO2e</strong> per month.</p>
+    `;
+    
+    // Show results section
+    updateResults();
+}
+
+// Calculate car carbon footprint
+function calculateCar() {
+    const mileage = parseFloat(document.getElementById('car-mileage').value) || 0;
+    const vehicleType = document.getElementById('car-vehicle').value;
+    const efficiency = parseFloat(document.getElementById('car-efficiency').value) || 0;
+    
+    // Emission factors (kg CO2e per mile)
+    const factors = {
+        'small-petrol': 0.26,
+        'medium-petrol': 0.32,
+        'large-petrol': 0.45,
+        'small-diesel': 0.24,
+        'medium-diesel': 0.28,
+        'large-diesel': 0.36,
+        'hybrid': 0.18,
+        'phev': 0.14,
+        'electric': 0.07,
+        'manual': 0 // Will be calculated based on efficiency
+    };
+    
+    let footprint;
+    
+    if (vehicleType === 'manual' && efficiency > 0) {
+        // Calculate based on user-provided efficiency
+        // Average gas emissions: 8.78 kg CO2e per gallon
+        footprint = mileage * (8.78 / efficiency);
+    } else {
+        footprint = mileage * factors[vehicleType];
+    }
+    
+    // Round to 2 decimal places
+    carbonData.car = Math.round(footprint * 100) / 100;
+    
+    // Display result
+    const resultElement = document.getElementById('car-result');
+    resultElement.innerHTML = `
+        <h4>Car Footprint Result</h4>
+        <p>Your car carbon footprint is <strong class="${getCarbonClass(carbonData.car)}">${carbonData.car} kg CO2e</strong> per month.</p>
+    `;
+    
+    // Show results section
+    updateResults();
+}
+
+// Calculate motorbike carbon footprint
+function calculateMotorbike() {
+    const mileage = parseFloat(document.getElementById('motorbike-mileage').value) || 0;
+    const motorbikeType = document.getElementById('motorbike-type').value;
+    const efficiency = parseFloat(document.getElementById('motorbike-efficiency').value) || 0;
+    
+    // Emission factors (kg CO2e per mile)
+    const factors = {
+        'small-motorbike': 0.09,
+        'medium-motorbike': 0.12,
+        'large-motorbike': 0.16,
+        'manual': 0 // Will be calculated based on efficiency
+    };
+    
+    let footprint;
+    
+    if (motorbikeType === 'manual' && efficiency > 0) {
+        // Calculate based on user-provided efficiency
+        // Average gas emissions: 8.78 kg CO2e per gallon
+        footprint = mileage * (8.78 / efficiency);
+    } else {
+        footprint = mileage * factors[motorbikeType];
+    }
+    
+    // Round to 2 decimal places
+    carbonData.motorbike = Math.round(footprint * 100) / 100;
+    
+    // Display result
+    const resultElement = document.getElementById('motorbike-result');
+    resultElement.innerHTML = `
+        <h4>Motorbike Footprint Result</h4>
+        <p>Your motorbike carbon footprint is <strong class="${getCarbonClass(carbonData.motorbike)}">${carbonData.motorbike} kg CO2e</strong> per month.</p>
+    `;
+    
+    // Show results section
+    updateResults();
+}
+
+// Calculate public transport carbon footprint
+function calculatePublic() {
+    const bus = parseFloat(document.getElementById('bus').value) || 0;
+    const coach = parseFloat(document.getElementById('coach').value) || 0;
+    const localTrain = parseFloat(document.getElementById('local-train').value) || 0;
+    const longDistanceTrain = parseFloat(document.getElementById('long-distance-train').value) || 0;
+    const tram = parseFloat(document.getElementById('tram').value) || 0;
+    const subway = parseFloat(document.getElementById('subway').value) || 0;
+    const taxi = parseFloat(document.getElementById('taxi').value) || 0;
+    
+    // Emission factors (kg CO2e per mile)
+    const factors = {
+        bus: 0.10,
+        coach: 0.03,
+        localTrain: 0.04,
+        longDistanceTrain: 0.06,
+        tram: 0.03,
+        subway: 0.03,
+        taxi: 0.21
+    };
+    
+    // Calculate carbon footprint
+    const footprint = (
+        bus * factors.bus +
+        coach * factors.coach +
+        localTrain * factors.localTrain +
+        longDistanceTrain * factors.longDistanceTrain +
+        tram * factors.tram +
+        subway * factors.subway +
+        taxi * factors.taxi
+    );
+    
+    // Round to 2 decimal places
+    carbonData.public = Math.round(footprint * 100) / 100;
+    
+    // Display result
+    const resultElement = document.getElementById('public-result');
+    resultElement.innerHTML = `
+        <h4>Public Transport Footprint Result</h4>
+        <p>Your public transport carbon footprint is <strong class="${getCarbonClass(carbonData.public)}">${carbonData.public} kg CO2e</strong> per month.</p>
+    `;
+    
+    // Show results section
+    updateResults();
+}
+
+// Calculate secondary carbon footprint
+function calculateSecondary() {
+    const food = parseFloat(document.getElementById('food').value) || 0;
+    const pharmaceuticals = parseFloat(document.getElementById('pharmaceuticals').value) || 0;
+    const clothes = parseFloat(document.getElementById('clothes').value) || 0;
+    const paper = parseFloat(document.getElementById('paper').value) || 0;
+    const computers = parseFloat(document.getElementById('computers').value) || 0;
+    const tv = parseFloat(document.getElementById('tv').value) || 0;
+    const vehicles = parseFloat(document.getElementById('vehicles').value) || 0;
+    const furniture = parseFloat(document.getElementById('furniture').value) || 0;
+    const hotels = parseFloat(document.getElementById('hotels').value) || 0;
+    const restaurants = parseFloat(document.getElementById('restaurants').value) || 0;
+    const recreation = parseFloat(document.getElementById('recreation').value) || 0;
+    const financial = parseFloat(document.getElementById('financial').value) || 0;
+    const other = parseFloat(document.getElementById('other').value) || 0;
+    
+    // Emission factors (kg CO2e per $)
+    const factors = {
+        food: 0.4,
+        pharmaceuticals: 0.3,
+        clothes: 0.5,
+        paper: 0.3,
+        computers: 0.6,
+        tv: 0.7,
+        vehicles: 0.5,
+        furniture: 0.4,
+        hotels: 0.3,
+        restaurants: 0.5,
+        recreation: 0.2,
+        financial: 0.1,
+        other: 0.25
+    };
+    
+    // Calculate carbon footprint
+    const footprint = (
+        food * factors.food +
+        pharmaceuticals * factors.pharmaceuticals +
+        clothes * factors.clothes +
+        paper * factors.paper +
+        computers * factors.computers +
+        tv * factors.tv +
+        vehicles * factors.vehicles +
+        furniture * factors.furniture +
+        hotels * factors.hotels +
+        restaurants * factors.restaurants +
+        recreation * factors.recreation +
+        financial * factors.financial +
+        other * factors.other
+    );
+    
+    // Round to 2 decimal places
+    carbonData.secondary = Math.round(footprint * 100) / 100;
+    
+    // Display result
+    const resultElement = document.getElementById('secondary-result');
+    resultElement.innerHTML = `
+        <h4>Secondary Footprint Result</h4>
+        <p>Your secondary carbon footprint is <strong class="${getCarbonClass(carbonData.secondary)}">${carbonData.secondary} kg CO2e</strong> per month.</p>
+    `;
+    
+    // Show results section
+    updateResults();
+}
+
+// Update results section
+function updateResults() {
+    // Calculate total carbon footprint
+    const total = Object.values(carbonData).reduce((sum, value) => sum + value, 0);
+    
+    // Show results section
+    document.getElementById('results').style.display = 'block';
+    
+    // Update summary table
+    const summaryTbody = document.getElementById('summary-tbody');
+    summaryTbody.innerHTML = '';
+    
+    // Add rows for each category
+    for (const [category, value] of Object.entries(carbonData)) {
+        if (value > 0) {
+            const percentage = (value / total * 100).toFixed(1);
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${capitalizeFirstLetter(category)}</td>
+                <td>${value.toFixed(2)}</td>
+                <td>${percentage}%</td>
+            `;
+            summaryTbody.appendChild(row);
+        }
+    }
+    
+    // Add total row
+    const totalRow = document.createElement('tr');
+    totalRow.innerHTML = `
+        <td>Total</td>
+        <td>${total.toFixed(2)}</td>
+        <td>100%</td>
+    `;
+    summaryTbody.appendChild(totalRow);
+    
+    // Update impact section
+    document.getElementById('total-carbon').textContent = total.toFixed(2);
+    document.getElementById('total-carbon').className = getCarbonClass(total);
+    
+    // Calculate trees equivalent (roughly 20 kg CO2 per tree per month)
+    const treesNeeded = Math.ceil(total / 20);
+    document.getElementById('trees-equivalent').textContent = treesNeeded;
+    
+    // Update comparison text
+    const avgMonthlyFootprint = 850; // kg CO2e
+    const percentDifference = ((total - avgMonthlyFootprint) / avgMonthlyFootprint * 100).toFixed(1);
+    
+    let comparisonText;
+    if (total < avgMonthlyFootprint) {
+        comparisonText = `Your footprint is ${Math.abs(percentDifference)}% lower than the average person's monthly footprint.`;
+    } else if (total > avgMonthlyFootprint) {
+        comparisonText = `Your footprint is ${percentDifference}% higher than the average person's monthly footprint.`;
+    } else {
+        comparisonText = `Your footprint is the same as the average person's monthly footprint.`;
+    }
+    
+    document.getElementById('comparison-text').textContent = comparisonText;
+    
+    // Update offset section
+    document.getElementById('offset-amount').textContent = total.toFixed(2);
+    
+    // Estimate offset cost ($10 per metric ton or $0.01 per kg)
+    const offsetCost = (total * 0.01).toFixed(2);
+    document.getElementById('offset-cost').textContent = offsetCost;
+}
+
+// Show offset section
+function showOffsetSection() {
+    document.getElementById('offset-section').style.display = 'block';
+    document.getElementById('offset-section').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Hide offset section
+function hideOffsetSection() {
+    document.getElementById('offset-section').style.display = 'none';
+}
+
+// Proceed to offset (would link to payment provider in real app)
+function proceedToOffset() {
+    alert('This would redirect to a payment provider in a real application.');
+}
+
+// Helper functions
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function getCarbonClass(value) {
+    if (value < 100) {
+        return 'low-carbon';
+    } else if (value < 500) {
+        return 'medium-carbon';
+    } else {
+        return 'high-carbon';
+    }
+}
+
+// Sidebar toggle functionality
+document.getElementById('sidebar-toggle').addEventListener('click', function() {
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
+    const toggleIcon = document.getElementById('toggle-icon');
+    
+    sidebar.classList.toggle('sidebar-hidden');
+    mainContent.classList.toggle('expanded');
+    this.classList.toggle('toggle-hidden');
+    
+    if (sidebar.classList.contains('sidebar-hidden')) {
+        toggleIcon.className = 'fas fa-chevron-right';
+    } else {
+        toggleIcon.className = 'fas fa-chevron-left';
+    }
+});
+</script>
+</body>
+</html>

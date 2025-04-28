@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EcoTrack</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <img src="EcoTrack.png" alt="EcoTrack Logo" class="logo">
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="calculator.html" class="nav-item">
+                    <i class="fas fa-calculator"></i>
+                    <span>Carbon Calculator</span>
+                </a>
+                <a href="tips.html" class="nav-item">
+                    <i class="fas fa-lightbulb"></i>
+                    <span>Eco Tips</span>
+                </a>
+                <a href="visualization.html" class="nav-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Progress</span>
+                </a>
+                <a href="community.html" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Community</span>
+                </a>
+                <a href="impact.html" class="nav-item">
+                    <i class="fas fa-leaf"></i>
+                    <span>Impact</span>
+                </a>
+                <a href="leaderboard.html" class="nav-item">
+                    <i class="fas fa-trophy"></i>
+                    <span>Leaderboard</span>
+                </a>
+                <a href="blogs.html" class="nav-item">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Blogs</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="profile.html" class="profile-link">
+                    <div class="profile-pic">
+                        <img src="user1.png" alt="Profile Picture">
+                    </div>
+                    <div class="profile-info">
+                        <h3>John Doe</h3>
+                        <p>Eco Enthusiast</p>
+                    </div>
+                </a>
+                <a href="logout.html" class="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Navigation Bar -->
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="top-nav">
+                    <button class="notification-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button>
+                    <button class="settings-btn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Welcome Message -->
+                <section class="welcome-card">
+                    <div class="welcome-text">
+                        <h2>Welcome back, John!</h2>
+                        <p>Your eco-journey is looking great. You've reduced your carbon footprint by 12% this month.</p>
+                    </div>
+                    <div class="quick-actions">
+                        <button class="action-btn primary">Track Today's Activity</button>
+                        <button class="action-btn secondary">Set New Goal</button>
+                    </div>
+                </section>
+
+                <!-- Stats Overview -->
+                <section class="stats-overview">
+                    <div class="stat-card">
+                        <div class="stat-icon eco-score">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Eco Score</h3>
+                            <p class="stat-value">87</p>
+                            <p class="stat-change positive">+4 from last month</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon carbon">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Carbon Footprint</h3>
+                            <p class="stat-value">2.4 tons</p>
+                            <p class="stat-change negative">-0.5 tons from last month</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon activities">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Eco Activities</h3>
+                            <p class="stat-value">24</p>
+                            <p class="stat-change positive">+7 from last month</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon streak">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-details">
+                            <h3>Eco Streak</h3>
+                            <p class="stat-value">15 days</p>
+                            <p class="stat-change">Keep it up!</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Main Dashboard Sections -->
+                <div class="dashboard-grid">
+                    <!-- Carbon Footprint Chart -->
+                    <section class="dashboard-card footprint-chart">
+                        <div class="card-header">
+                            <h3>Carbon Footprint Trend</h3>
+                            <div class="card-actions">
+                                <button class="time-filter active">Month</button>
+                                <button class="time-filter">Year</button>
+                                <button class="card-more">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <!-- Placeholder for chart -->
+                            <div class="chart-placeholder">
+                                <div class="chart-bar" style="height: 60%;"></div>
+                                <div class="chart-bar" style="height: 80%;"></div>
+                                <div class="chart-bar" style="height: 50%;"></div>
+                                <div class="chart-bar" style="height: 65%;"></div>
+                                <div class="chart-bar" style="height: 45%;"></div>
+                                <div class="chart-bar" style="height: 40%;"></div>
+                                <div class="chart-bar" style="height: 30%;"></div>
+                            </div>
+                            <div class="chart-legend">
+                                <span>Mon</span>
+                                <span>Tue</span>
+                                <span>Wed</span>
+                                <span>Thu</span>
+                                <span>Fri</span>
+                                <span>Sat</span>
+                                <span>Sun</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Eco Tips -->
+                    <section class="dashboard-card eco-tips">
+                        <div class="card-header">
+                            <h3>Personalized Eco Tips</h3>
+                            <button class="card-more">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <div class="tips-container">
+                            <div class="tip-item">
+                                <div class="tip-icon">
+                                    <i class="fas fa-plug"></i>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>Reduce Standby Power</h4>
+                                    <p>Unplug electronics when not in use to save up to 10% on your electricity bill.</p>
+                                </div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-icon">
+                                    <i class="fas fa-shower"></i>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>Shorter Showers</h4>
+                                    <p>Reducing your shower time by 2 minutes can save up to 10 gallons of water.</p>
+                                </div>
+                            </div>
+                            <div class="tip-item">
+                                <div class="tip-icon">
+                                    <i class="fas fa-utensils"></i>
+                                </div>
+                                <div class="tip-content">
+                                    <h4>Meatless Monday</h4>
+                                    <p>Try going meat-free one day a week to reduce your carbon footprint.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="tips.html" class="view-all-link">View All Tips</a>
+                    </section>
+
+                    <!-- Community Updates -->
+                    <section class="dashboard-card community-updates">
+                        <div class="card-header">
+                            <h3>Community Highlights</h3>
+                            <button class="card-more">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <div class="community-feed">
+                            <div class="community-post">
+                                <div class="post-user">
+                                    <img src="user1.jpg" alt="User 1">
+                                    <div class="post-user-info">
+                                        <h4>Sarah Johnson</h4>
+                                        <p>2 hours ago</p>
+                                    </div>
+                                </div>
+                                <p class="post-content">Just completed my first month of composting! Reduced my waste by 30%.</p>
+                                <div class="post-actions">
+                                    <button><i class="fas fa-heart"></i> 24</button>
+                                    <button><i class="fas fa-comment"></i> 5</button>
+                                </div>
+                            </div>
+                            <div class="community-post">
+                                <div class="post-user">
+                                    <img src="user2.jpg" alt="User 2">
+                                    <div class="post-user-info">
+                                        <h4>Michael Chen</h4>
+                                        <p>Yesterday</p>
+                                    </div>
+                                </div>
+                                <p class="post-content">Just installed solar panels! Excited to track my energy savings.</p>
+                                <div class="post-actions">
+                                    <button><i class="fas fa-heart"></i> 42</button>
+                                    <button><i class="fas fa-comment"></i> 12</button>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="community.html" class="view-all-link">Join the Conversation</a>
+                    </section>
+
+                    <!-- Upcoming Challenges -->
+                    <section class="dashboard-card challenges">
+                        <div class="card-header">
+                            <h3>Eco Challenges</h3>
+                            <button class="card-more">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                        <div class="challenges-list">
+                            <div class="challenge-item active">
+                                <div class="challenge-info">
+                                    <h4>No Single-Use Plastic Week</h4>
+                                    <p>Ends in 3 days</p>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 70%;"></div>
+                                    </div>
+                                </div>
+                                <div class="challenge-status">
+                                    <span>70%</span>
+                                </div>
+                            </div>
+                            <div class="challenge-item upcoming">
+                                <div class="challenge-info">
+                                    <h4>Public Transport Month</h4>
+                                    <p>Starts in 5 days</p>
+                                </div>
+                                <button class="join-btn">Join</button>
+                            </div>
+                            <div class="challenge-item upcoming">
+                                <div class="challenge-info">
+                                    <h4>Zero Waste Weekend</h4>
+                                    <p>Starts in 12 days</p>
+                                </div>
+                                <button class="join-btn">Join</button>
+                            </div>
+                        </div>
+                        <a href="challenges.html" class="view-all-link">View All Challenges</a>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="dashboard.js"></script>
+</body>
+</html>

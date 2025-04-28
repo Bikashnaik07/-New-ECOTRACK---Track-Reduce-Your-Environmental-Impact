@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - EcoTrack</title>
+    <link rel="stylesheet" href="stylelb.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo-link">
+                <img src="EcoTrack.png" alt="EcoTrack Logo" class="logo">
+            </a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="faqs.html">FAQs</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="leaderboard.html" class="active">Leaderboard</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="leaderboard-intro">
+            <div class="container">
+                <h1><i class="fas fa-trophy"></i> EcoTrack Champions</h1>
+                <p>Celebrating environmental heroes making a sustainable impact!</p>
+                <div class="time-period-selector">
+                    <button class="time-btn active" data-period="week">This Week</button>
+                    <button class="time-btn" data-period="month">This Month</button>
+                    <button class="time-btn" data-period="alltime">All Time</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="leaderboard-content">
+            <div class="container">
+                <div class="leaderboard-card">
+                    <div class="card-header">
+                        <h2>Top Contributors</h2>
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Search by name...">
+                            <i class="fas fa-search"></i>
+                        </div>
+                    </div>
+                    <table id="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>User</th>
+                                <th>Points <i class="fas fa-sort"></i></th>
+                                <th>Actions Taken</th>
+                                <th>Carbon Saved (kg)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- Leaderboard rows will be added dynamically via JavaScript -->
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <button id="prev-page" disabled><i class="fas fa-chevron-left"></i> Previous</button>
+                        <span id="page-info">Page 1 of 1</span>
+                        <button id="next-page">Next <i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="your-stats">
+            <div class="container">
+                <div class="stats-card">
+                    <h2>Your EcoTrack Status</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <i class="fas fa-ranking-star"></i>
+                            <h3>Your Rank</h3>
+                            <p class="stat-value" id="user-rank">28</p>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-star"></i>
+                            <h3>Points</h3>
+                            <p class="stat-value" id="user-points">650</p>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-leaf"></i>
+                            <h3>Actions</h3>
+                            <p class="stat-value" id="user-actions">23</p>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-cloud"></i>
+                            <h3>Carbon Saved</h3>
+                            <p class="stat-value" id="user-carbon">125 kg</p>
+                        </div>
+                    </div>
+                    <button class="cta-button">Improve Your Rank</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="EcoTrack.png" alt="EcoTrack Logo" class="footer-logo-img">
+                    <p>Making sustainability competitive</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html">Services</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h3>Connect With Us</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 EcoTrack. All rights reserved.</p>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+    <script src="scriptlb.js"></script>
+</body>
+</html>

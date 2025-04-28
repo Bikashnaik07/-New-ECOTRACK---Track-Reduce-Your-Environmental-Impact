@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack Watch Demo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #2ecc71;
+            --primary-dark: #27ae60;
+            --accent: #3498db;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+            --gray: #95a5a6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a3a 0%, #2c3e50 100%);
+            color: var(--light);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        header {
+            background: rgba(44, 62, 80, 0.8);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem;
+            padding-right: 40px;
+            text-align: center;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        header .logo-link {
+                display: flex;
+                align-items: center;
+            }
+
+            header .logo {
+                height: 50px;
+                padding-left: 40px;
+                transition: transform 0.3s;
+            }
+
+            header .logo:hover {
+                transform: scale(1.05);
+            }
+        
+        nav {
+            background: rgba(39, 174, 96, 0.2);
+            backdrop-filter: blur(5px);
+            padding: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        nav li {
+            margin: 0 1rem;
+            position: relative;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        
+        nav a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-3px);
+        }
+        
+        nav a.active {
+            background-color: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .demo-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .watch-container {
+            position: relative;
+            width: 300px;
+            height: 350px;
+            margin: 3rem auto;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 1s;
+        }
+        
+        .watch {
+            position: absolute;
+            width: 100%;
+            height: 300px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            box-shadow: 
+                0 0 0 10px #333,
+                0 0 30px rgba(46, 204, 113, 0.8),
+                inset 0 0 20px rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .watch-screen {
+            width: 80%;
+            height: 80%;
+            background: #000;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem 1rem;
+            color: white;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            transition: all 0.5s ease;
+        }
+        
+        .watch-band-top, .watch-band-bottom {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 80px;
+            background: linear-gradient(to right, #222, #444, #222);
+            z-index: -1;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        
+        .watch-band-top {
+            top: -40px;
+            border-radius: 15px 15px 0 0;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 85% 80%, 15% 80%, 0 100%);
+        }
+        
+        .watch-band-bottom {
+            bottom: -40px;
+            border-radius: 0 0 15px 15px;
+            clip-path: polygon(0 0, 15% 20%, 85% 20%, 100% 0, 100% 100%, 0 100%);
+        }
+        
+        .time {
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .time span {
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        
+        .eco-score-container {
+            position: relative;
+            width: 100%;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+        
+        .eco-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+        }
+        
+        .eco-score-ring {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid rgba(46, 204, 113, 0.3);
+            border-top: 4px solid var(--primary);
+            animation: spin 2s linear infinite;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 0.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 0.3rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            flex: 1;
+            margin: 0 0.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .metric:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+        
+        .metric-value {
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-value.positive {
+            color: var(--success);
+        }
+        
+        .metric-value.negative {
+            color: var(--danger);
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .control-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .control-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+        
+        .control-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 20px rgba(46, 204, 113, 0.6);
+        }
+        
+        .control-btn:hover::before {
+            width: 100%;
+        }
+        
+        .control-btn:active {
+            transform: translateY(-2px);
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 5rem;
+        }
+        
+        .feature-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            z-index: -1;
+            transition: all 0.5s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.1);
+        }
+        
+        .feature-card:hover::before {
+            transform: scale(10);
+            opacity: 0.1;
+        }
+        
+        .feature-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feature-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover h3::after {
+            width: 100%;
+        }
+        
+        .feature-card p {
+            color: var(--light);
+            line-height: 1.7;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2);
+        }
+        
+        footer {
+            background: linear-gradient(to right, var(--dark), #1a2a3a);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent), var(--primary));
+            animation: gradient-move 5s linear infinite;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #2980b9);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 7px 20px rgba(52, 152, 219, 0.6);
+            background: linear-gradient(135deg, #2980b9, var(--accent));
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+            transition: all 0.7s ease;
+        }
+        
+        .screens {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 1.5rem 1rem;
+        }
+        
+        .screen-stats {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .screen-activity {
+            opacity: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            padding: 1rem 0;
+        }
+        
+        .screen-challenges {
+            opacity: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            padding: 0.5rem 0;
+        }
+        
+        .screen-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+        
+        .activity-item, .challenge-item {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .activity-item:hover, .challenge-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(5px);
+        }
+        
+        .activity-icon, .challenge-icon {
+            width: 25px;
+            height: 25px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 0.5rem;
+        }
+        
+        .activity-details, .challenge-details {
+            flex: 1;
+            text-align: left;
+            font-size: 0.7rem;
+        }
+        
+        .activity-title, .challenge-title {
+            font-weight: 500;
+        }
+        
+        .activity-impact, .challenge-reward {
+            font-size: 0.6rem;
+            color: var(--success);
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 100px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            position: relative;
+        }
+        
+        .chart-bar {
+            background: linear-gradient(to top, var(--primary), var(--accent));
+            position: absolute;
+            bottom: 0;
+            width: 12%;
+            transition: height 1s ease;
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .chart-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.6rem;
+            opacity: 0.7;
+        }
+        
+        .progress-ring {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary) 0%, var(--primary) 65%, #444 65%, #444 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0.5rem auto;
+        }
+        
+        .progress-ring-inner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes gradient-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
+        }
+        
+        .floating {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        .glow {
+            box-shadow: 0 0 20px var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .glow:hover {
+            box-shadow: 0 0 40px var(--primary);
+        }
+        
+        .shadow-text {
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+        
+        .highlight {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .highlight::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: var(--primary);
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+            }
+            
+            nav li {
+                margin: 0.3rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .watch-container {
+                width: 250px;
+                height: 300px;
+            }
+            
+            .watch {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles-js"></div>
+    
+    <header>
+        <a href="index.html" class="logo-link">
+            <img src="EcoTrack.png" alt="EcoTrack Logo" class="logo">
+        </a>
+        <div class="header-actions">
+            <button class="btn-primary" onclick="window.location.href='your-link-here.html'" style="margin: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">Get App</button>
+        </div>
+    </header>
+    <nav>
+        <ul class="nav-links">
+            <li><a href="services.html">Services</a></li>
+            <li><a href="FAQs.html">FAQs</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="leaderboard.html">Learderbard</a></li>
+            <li><a href="index.html">Home</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <div class="demo-section">
+            <h2 class="gradient-text">Your Eco Journey on Your Wrist</h2>
+            <p class="shadow-text">Track, analyze, and improve your environmental impact in real-time with our cutting-edge smartwatch app</p>
+            
+            <div class="watch-container floating" id="watchContainer">
+                <div class="watch-band-top"></div>
+                <div class="watch glow" id="watch">
+                    <div class="watch-screen" id="mainScreen">
+                        <div class="time" id="timeDisplay">10:25 <span>AM</span></div>
+                        <div class="eco-score-container">
+                            <div class="eco-score" id="ecoScore">82</div>
+                            <div class="eco-score-ring"></div>
+                        </div>
+                        <div class="stats">
+                            <div class="metric">
+                                <div>CO₂</div>
+                                <div class="metric-value positive" id="co2Value">-12%</div>
+                            </div>
+                            <div class="metric">
+                                <div>H₂O</div>
+                                <div class="metric-value positive" id="waterValue">-8%</div>
+                            </div>
+                            <div class="metric">
+                                <div>Steps</div>
+                                <div class="metric-value" id="stepsValue">6.2k</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="screens screen-stats" id="statsScreen">
+                        <div class="back-btn" id="backFromStats">←</div>
+                        <div class="screen-title">Weekly Progress</div>
+                        <div class="chart-container">
+                            <div class="chart-bar" style="left: 5%; height: 60%;"></div>
+                            <div class="chart-bar" style="left: 20%; height: 70%;"></div>
+                            <div class="chart-bar" style="left: 35%; height: 55%;"></div>
+                            <div class="chart-bar" style="left: 50%; height: 75%;"></div>
+                            <div class="chart-bar" style="left: 65%; height: 85%;"></div>
+                            <div class="chart-bar" style="left: 80%; height: 65%;"></div>
+                        </div>
+                        <div class="chart-labels">
+                            <span>Mon</span>
+                            <span>Tue</span>
+                            <span>Wed</span>
+                            <span>Thu</span>
+                            <span>Fri</span>
+                            <span>Sat</span>
+                        </div>
+                        <div class="screen-title">Monthly Trend</div>
+                        <div class="progress-ring">
+                            <div class="progress-ring-inner">65%</div>
+                        </div>
+                        <div style="font-size: 0.7rem; text-align: center;">Greener than last month</div>
+                    </div>
+                    
+                    <div class="screens screen-activity" id="activityScreen">
+                        <div class="back-btn" id="backFromActivity">←</div>
+                        <div class="screen-title">Log Activity</div>
+                        <div style="width: 100%; overflow-y: auto;">
+                            <div class="activity-item">
+                                <div class="activity-icon">🚶</div>
+                                <div class="activity-details">
+                                    <div class="activity-title">Walking</div>
+                                    <div class="activity-impact">-0.2kg CO₂ per km</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">🚲</div>
+                                <div class="activity-details">
+                                    <div class="activity-title">Cycling</div>
+                                    <div class="activity-impact">-0.5kg CO₂ per trip</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">🚇</div>
+                                <div class="activity-details">
+                                    <div class="activity-title">Public Transit</div>
+                                    <div class="activity-impact">-1.2kg CO₂ per trip</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">♻️</div>
+                                <div class="activity-details">
+                                    <div class="activity-title">Recycling</div>
+                                    <div class="activity-impact">+5 eco points</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="screens screen-challenges" id="challengesScreen">
+                        <div class="back-btn" id="backFromChallenges">←</div>
+                        <div class="screen-title">Daily Challenges</div>
+                        <div style="width: 100%; overflow-y: auto;">
+                            <div class="challenge-item">
+                                <div class="challenge-icon" style="background: var(--warning);">🥤</div>
+                                <div class="challenge-details">
+                                    <div class="challenge-title">Zero Plastic Day</div>
+                                    <div class="challenge-reward">+15 points</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-icon" style="background: var(--primary);">🔌</div>
+                                <div class="challenge-details">
+                                    <div class="challenge-title">Power Saver</div>
+                                    <div class="challenge-reward">+10 points</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-icon" style="background: var(--accent);">💧</div>
+                                <div class="challenge-details">
+                                    <div class="challenge-title">Water Guardian</div>
+                                    <div class="challenge-reward">+12 points</div>
+                                </div>
+                            </div>
+                            <div class="challenge-item">
+                                <div class="challenge-icon" style="background: var(--danger);">🍎</div>
+                                <div class="challenge-details">
+                                    <div class="challenge-title">Local Food Only</div>
+                                    <div class="challenge-reward">+20 points</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="watch-band-bottom"></div>
+            </div>
+            
+            <div class="controls">
+                <button class="control-btn" id="viewStatsBtn">View Stats</button>
+                <button class="control-btn" id="logActivityBtn">Log Activity</button>
+                <button class="control-btn" id="challengesBtn">Challenges</button>
+            </div>
+        
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">♻️</div>
+                    <h3>Real-time Eco Tracking</h3>
+                    <p>Monitor your carbon footprint, water usage, and environmental impact in real-time. Get personalized insights on how your daily choices affect the planet.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Daily Eco Challenges</h3>
+                    <p>Complete fun daily challenges designed to reduce your environmental impact. Earn points, unlock achievements, and compete with friends for a greener planet.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Data Visualization</h3>
+                    <p>View detailed charts and graphs of your eco habits over time. Track your progress, identify patterns, and get actionable insights to improve your sustainability.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Smart Notifications</h3>
+                    <p>Receive timely alerts about your environmental impact. Get suggestions for eco-friendly alternatives when our AI detects opportunities to reduce your footprint.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Community Connection</h3>
+                    <p>Join a global community of eco-conscious individuals. Share tips, participate in group challenges, and work together towards a sustainable future.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Seamless Integration</h3>
+                    <p>Sync with your favorite fitness apps and smart home devices. Our platform integrates with existing ecosystems to provide a holistic view of your environmental impact.</p>
+                </div>
+            </div>
+            
+            <div class="demo-section" style="margin-top: 5rem;">
+                <h2 class="gradient-text">Ready to Make a Difference</span>?</h2>
+                <p class="shadow-text">Join thousands of eco-warriors who are using EcoTrack to reduce their environmental footprint</p>
+                <button class="btn-primary">Download Now</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 EcoTrack | All Rights Reserved</p>
+            <p>Making the world greener, one step at a time</p>
+        </footer>
+        
+        <script>
+            function updateTime() {
+                const now = new Date();
+                let hours = now.getHours();
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                
+                hours = hours % 12;
+                hours = hours ? hours : 12;
+                
+                document.getElementById('timeDisplay').innerHTML = `${hours}:${minutes} <span>${ampm}</span>`;
+            }
+            
+            setInterval(updateTime, 60000);
+            updateTime();
+            
+            function updateMetrics() {
+                const co2Change = (Math.random() * -18).toFixed(0);
+                const waterChange = (Math.random() * -15).toFixed(0);
+                const steps = (Math.random() * 8 + 4).toFixed(1);
+                
+                document.getElementById('co2Value').textContent = `${co2Change}%`;
+                document.getElementById('waterValue').textContent = `${waterChange}%`;
+                document.getElementById('stepsValue').textContent = `${steps}k`;
+                
+                const ecoScore = 75 + Math.floor(Math.random() * 15);
+                document.getElementById('ecoScore').textContent = ecoScore;
+            }
+            
+            setInterval(updateMetrics, 5000);
+            
+            // Screen switching functionality
+            const mainScreen = document.getElementById('mainScreen');
+            const statsScreen = document.getElementById('statsScreen');
+            const activityScreen = document.getElementById('activityScreen');
+            const challengesScreen = document.getElementById('challengesScreen');
+            const watch = document.getElementById('watch');
+            
+            document.getElementById('viewStatsBtn').addEventListener('click', () => {
+                mainScreen.style.opacity = '0';
+                setTimeout(() => {
+                    mainScreen.style.display = 'none';
+                    statsScreen.style.display = 'block';
+                    setTimeout(() => {
+                        statsScreen.style.opacity = '1';
+                    }, 100);
+                }, 500);
+            });
+            
+            document.getElementById('logActivityBtn').addEventListener('click', () => {
+                mainScreen.style.opacity = '0';
+                setTimeout(() => {
+                    mainScreen.style.display = 'none';
+                    activityScreen.style.display = 'flex';
+                    setTimeout(() => {
+                        activityScreen.style.opacity = '1';
+                    }, 100);
+                }, 500);
+            });
+            
+            document.getElementById('challengesBtn').addEventListener('click', () => {
+                mainScreen.style.opacity = '0';
+                setTimeout(() => {
+                    mainScreen.style.display = 'none';
+                    challengesScreen.style.display = 'flex';
+                    setTimeout(() => {
+                        challengesScreen.style.opacity = '1';
+                    }, 100);
+                }, 500);
+            });
+            
+            document.getElementById('backFromStats').addEventListener('click', () => {
+                statsScreen.style.opacity = '0';
+                setTimeout(() => {
+                    statsScreen.style.display = 'none';
+                    mainScreen.style.display = 'flex';
+                    setTimeout(() => {
+                        mainScreen.style.opacity = '1';
+                    }, 100);
+                }, 500);
+            });
+            
+            document.getElementById('backFromActivity').addEventListener('click', () => {
+                activityScreen.style.opacity = '0';
+                setTimeout(() => {
+                    activityScreen.style.display = 'none';
+                    mainScreen.style.display = 'flex';
+                    setTimeout(() => {
+                        mainScreen.style.opacity = '1';
+                    }, 100);
+                }, 500);
+            });
+            
+            document.getElementById('backFromChallenges').addEventListener('click', () => {
+                challengesScreen.style.opacity = '0';
+                setTimeout(() => {
+                    challengesScreen.style.display = 'none';
+                    mainScreen.style.display = 'flex';
+                    setTimeout(() => {
+                        mainScreen.style.opacity = '1';
+                    }, 100);
+                }, 500);
+            });
+            
+            // Watch interaction effects
+            const watchContainer = document.getElementById('watchContainer');
+            
+            watchContainer.addEventListener('mousemove', (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                
+                watch.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+            
+            watchContainer.addEventListener('mouseenter', () => {
+                watch.style.transition = 'none';
+            });
+            
+            watchContainer.addEventListener('mouseleave', () => {
+                watch.style.transition = 'all 0.5s ease';
+                watch.style.transform = 'rotateY(0deg) rotateX(0deg)';
+            });
+            
+            // Particles.js setup (requires particles.js library)
+            document.addEventListener('DOMContentLoaded', function() {
+                // Check if particles.js is loaded
+                if (typeof particlesJS !== 'undefined') {
+                    particlesJS('particles-js', {
+                        particles: {
+                            number: { value: 80, density: { enable: true, value_area: 800 } },
+                            color: { value: '#2ecc71' },
+                            shape: { type: 'circle' },
+                            opacity: { value: 0.5, random: false },
+                            size: { value: 3, random: true },
+                            line_linked: {
+                                enable: true,
+                                distance: 150,
+                                color: '#2ecc71',
+                                opacity: 0.4,
+                                width: 1
+                            },
+                            move: {
+                                enable: true,
+                                speed: 2,
+                                direction: 'none',
+                                random: false,
+                                straight: false,
+                                out_mode: 'out',
+                                bounce: false
+                            }
+                        },
+                        interactivity: {
+                            detect_on: 'canvas',
+                            events: {
+                                onhover: { enable: true, mode: 'grab' },
+                                onclick: { enable: true, mode: 'push' },
+                                resize: true
+                            },
+                            modes: {
+                                grab: { distance: 140, line_linked: { opacity: 1 } },
+                                push: { particles_nb: 4 }
+                            }
+                        },
+                        retina_detect: true
+                    });
+                }
+            });
+        </script>
+        
+        <!-- Load particles.js from CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+    </body>
+    </html>
