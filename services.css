@@ -1,0 +1,566 @@
+/* Services Page Specific Styles */
+
+/* Hero Section */
+#services-hero {
+    text-align: center;
+    padding: 4rem 0;
+    background: url('eco-pattern.jpg') center/cover;
+    position: relative;
+}
+
+#services-hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+#services-hero .container {
+    position: relative;
+    z-index: 2;
+}
+
+#services-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#services-hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Services Overview */
+#services-overview {
+    padding: 4rem 0;
+}
+
+#services-overview h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+.section-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+}
+
+.service-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 70px;
+    height: 70px;
+    background: linear-gradient(135deg, #0072ff, #00c6ff);
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 5px 15px rgba(0, 114, 255, 0.3);
+}
+
+.service-icon i {
+    font-size: 1.8rem;
+    color: white;
+}
+
+.service-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.service-card p {
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.service-link {
+    color: #00c6ff;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    transition: all 0.3s;
+}
+
+.service-link i {
+    margin-left: 0.5rem;
+    transition: transform 0.3s;
+}
+
+.service-link:hover {
+    color: #FFD700;
+}
+
+.service-link:hover i {
+    transform: translateX(5px);
+}
+
+/* Featured Service */
+#featured-service {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, rgba(0, 114, 255, 0.1), rgba(0, 198, 255, 0.1));
+    position: relative;
+    overflow: hidden;
+}
+
+#featured-service::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0) 70%);
+    z-index: 1;
+}
+
+.featured-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.featured-text h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.featured-text p {
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.1rem;
+}
+
+.feature-list {
+    list-style: none;
+    margin-bottom: 2rem;
+}
+
+.feature-list li {
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.feature-list i {
+    color: #FFD700;
+    margin-right: 0.8rem;
+}
+
+.featured-image {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.featured-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.featured-image:hover .featured-img {
+    transform: scale(1.03);
+}
+
+/* Buttons */
+.btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, #0072ff, #00c6ff);
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: white;
+    padding: 0.8rem 2rem;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-3px);
+}
+
+/* Pricing Section */
+#pricing {
+    padding: 5rem 0;
+}
+
+#pricing h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.pricing-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    transition: all 0.3s;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pricing-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-card.featured-plan {
+    background: linear-gradient(135deg, rgba(0, 114, 255, 0.2), rgba(0, 198, 255, 0.2));
+    border: 1px solid rgba(0, 198, 255, 0.3);
+    z-index: 2;
+    transform: scale(1.05);
+}
+
+.pricing-card.featured-plan:hover {
+    transform: scale(1.05) translateY(-10px);
+}
+
+.plan-badge {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: #FFD700;
+    color: #1F1C2C;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    box-shadow: 0 3px 8px rgba(255, 215, 0, 0.3);
+}
+
+.pricing-header {
+    margin-bottom: 2rem;
+}
+
+.pricing-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.price {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    color: #fff;
+}
+
+.currency {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: 0.2rem;
+}
+
+.amount {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.period {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-left: 0.3rem;
+}
+
+.custom-price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.pricing-features {
+    margin-bottom: 2rem;
+}
+
+.pricing-features ul {
+    list-style: none;
+    text-align: left;
+    margin: 0 auto;
+    max-width: 80%;
+}
+
+.pricing-features li {
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+}
+
+.pricing-features i {
+    color: #0072ff;
+    margin-right: 0.8rem;
+    font-size: 0.9rem;
+}
+
+/* Testimonials */
+#testimonials {
+    padding: 5rem 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+#testimonials h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.2rem;
+    color: #fff;
+}
+
+.testimonial-slider {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.testimonial-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-content {
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    font-style: italic;
+}
+
+.testimonial-author {
+    display: flex;
+    align-items: center;
+}
+
+.author-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 1rem;
+    border: 3px solid rgba(0, 114, 255, 0.5);
+}
+
+.author-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.2rem;
+    color: #fff;
+}
+
+.author-info p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+.testimonial-controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.testimonial-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.testimonial-btn:hover {
+    background: rgba(0, 114, 255, 0.5);
+}
+
+/* CTA Section */
+#cta-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, rgba(0, 114, 255, 0.2), rgba(0, 198, 255, 0.2));
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #fff;
+}
+
+.cta-content p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .featured-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .featured-text {
+        order: 1;
+    }
+    
+    .featured-image {
+        order: 0;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .pricing-card.featured-plan {
+        grid-column: span 2;
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #services-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .featured-image {
+        margin: 0 auto;
+        max-width: 500px;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pricing-card.featured-plan {
+        grid-column: auto;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        gap: 1rem;
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .testimonial-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #services-hero h1 {
+        font-size: 2rem;
+    }
+    
+    #services-hero p {
+        font-size: 1rem;
+    }
+    
+    .service-card {
+        padding: 1.5rem;
+    }
+    
+    .testimonial-content p {
+        font-size: 1rem;
+    }
+}
